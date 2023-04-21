@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\PostController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -23,6 +23,16 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Auth::routes();
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
+
+//
+
+Route::post('/post/create',[PostController::class,'create']);
+Route::get('/post/show',[PostController::class,'show']);
+Route::post('/post/edit/{id}',[PostController::class,'update']);
+Route::get('/post/delete/{id}',[PostController::class,'delete']);
+Route::view('/post/create','/post/create');
+Route::view('/post/edit','/post/edit');
+//
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
