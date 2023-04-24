@@ -17,7 +17,7 @@
          padding:100px; /* add padding */
         }
         </style>
-        <title>Document</title>
+        <title></title>
        </head>
       <body>
         <div class="container">

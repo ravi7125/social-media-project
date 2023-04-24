@@ -5,6 +5,10 @@
         <a class="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block" href="{{ route('home') }}">{{ __('Dashboard') }}</a>
         <!-- Form -->
         <form class="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
+            <a href="/post/create">
+                <i class="fas fa-plus-circle fa-lg" style="color: black;"></i> 
+                <span style="color: rgb(9, 9, 9);">create post</span>
+              </a>
             <div class="form-group mb-0">
                 <div class="input-group input-group-alternative">
                     <div class="input-group-prepend">

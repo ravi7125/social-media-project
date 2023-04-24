@@ -6,7 +6,7 @@
         </button>
         <!-- Brand -->
         <a class="navbar-brand pt-0" href="{{ route('home') }}">
-            <img src="{{ asset('argon') }}/img/brand/blue.png" class="navbar-brand-img" alt="...">
+            <img src="{{ asset('argon') }}/img/brand/social-media-title.jpg" class="navbar-brand-img" alt="...">
         </a>
         <!-- User -->
         <ul class="nav align-items-center d-md-none">
@@ -104,20 +104,25 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="post/show">
-                        <i class="ni ni-circle-08 text-pink"></i> {{ __('User show') }}
+                    <a class="nav-link" href="userpost/{id}">
+                        <i class="ni ni-circle-08 text-pink"></i> {{ __('User Post') }}
                     </a>
-                </li>    
+                </li>   
+                <li class="nav-item">
+                    <a class="nav-link" href="post/show">
+                        <i class="ni ni-circle-08 text-pink"></i> {{ __('user Feeds') }}
+                    </a>
+                </li> 
                 <li class="nav-item">
                     <a class="nav-link" href="#">
                         <i class="ni ni-circle-08 text-pink"></i> {{ __('Register') }}
                     </a>
                 </li>
-                <li class="nav-item mb-5 mr-4 ml-4 pl-1 bg-danger" style="position: absolute; bottom: 0;">
+                {{-- <li class="nav-item mb-5 mr-4 ml-4 pl-1 bg-danger" style="position: absolute; bottom: 0;">
                     <a class="nav-link text-white" href="https://www.creative-tim.com/product/argon-dashboard-pro-laravel" target="_blank">
                         <i class="ni ni-cloud-download-95"></i> Upgrade to PRO
                     </a>
-                </li>
+                </li> --}}
             </ul>
             </ul>
         </div>

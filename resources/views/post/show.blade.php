@@ -29,15 +29,37 @@
                             <div class="d-flex flex-row justify-content-between align-items-center p-2 border-bottom">
                                 <div class="d-flex flex-row align-items-center feed-text px-2"><img class="rounded-circle" src="{{ Storage::url($post->image) }}" width="38">
                                     <div class="d-flex flex-column flex-wrap ml-2"><span class="font-weight-bold">{{ $post->user->name }}</span><span class="text-black-50 time"></span></div>
-                                </div>
-                            
+                                </div>               
                                     <div class="feed-icon px-2"> <button class="btn btn-danger"><a class="text-white" type="button" href={{'delete/'.$post['id']}}>Delete</a>
                                     <div class="feed-icon px-2"> <button class="btn btn-success"><a class="text-white" type="button" href={{'edit/'.$post['id']}}>Edit</a>
                             </div>
                         </div>
                         <div class="p-2 px-3"><span>{{ $post->title }}</span></div>
                         <div class="feed-image p-2 px-3"><img class="img-fluid img-responsive" src="{{ Storage::url($post->image) }}"></div>
-                        <div class="d-flex justify-content-end socials p-2 py-3"><i class="fa fa-thumbs-up"></i><i class="fa fa-comments-o"></i></div>
+                       
+                        <div class="d-flex justify-content-end socials p-2 py-3">
+                            <i class="fas fa-thumbs-up"></i>
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        
+                        <div class="d-flex justify-content-end socials p-2 py-3">
+                            <form action="{{ route('like.post', $post->id) }}" method="post">
+                                @csrf
+                                <button class="btn btn-primary {{ $post->isLikedBy(auth()->user()) ? 'active' : '' }}" type="submit">
+                                    <i class="fas fa-thumbs-up"></i> {{ $post->likes_count }} Likes
+                                </button>
+                            </form>
+                        
+                            <form action="{{ route('unlike.post', $post->id) }}" method="post">
+                                @csrf
+                                <button class="btn btn-danger {{ $post->isLikedBy(auth()->user()) ? '' : 'd-none' }}" type="submit">
+                                    <i class="fas fa-thumbs-down"></i> Unlike
+                                </button>
+                            </form>
+                        </div> 
+                        
+                        
+                        
                         <div class="p-2 px-3"><span>{{ $post->content }}</span></div>
                     </div>
                 </div>
@@ -65,17 +87,3 @@
 
 
 
-{{-- new --}}
-        {{-- <ul>
-           
-                <li>
-                    <p>{{ $post->user->name }}</p>
-                    <h2>{{ $post->title }}</h2>
-                    <p>{{ $post->content }}</p>
-                    <img src="{{ Storage::url($post->image) }}" alt="{{ $post->title }}" width="300">
-                   
-                </li>
-            @endforeach
-        </ul>
-     </body>
-     </html> --}}
