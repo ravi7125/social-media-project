@@ -20,8 +20,8 @@
         <div class="row">
             @foreach ($post as $post)
             <div class="col col-lg-4 border bg-light px-md-5"><img src="{{ Storage::url($post->image)}}" alt="" style="width:100%;margin-top:10%;margin-bottom:10%;height: 80%">
-            <button class="btn btn-danger mb-4 "><a type="button" class="link-light text-decoration-none" href={{'delete/'.$post['id']}}>Delete</a>
-            <button class="btn btn-success mb-4 mx-3 "><a type="button" class="link-light text-decoration-none"  href={{'edit/'.$post['id']}}>Edit</a>
+            <button class="btn btn-danger mb-4 "><a type="button" class="link-light text-decoration-none" href={{'/post/delete/'.$post['id']}}>Delete</a>
+            <button class="btn btn-success mb-4 mx-3 "><a type="button" class="link-light text-decoration-none" href={{'/post/edit/'.$post['id']}}>Edit</a>
            </div>
                 @endforeach
         </div>

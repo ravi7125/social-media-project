@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostLikeController;
+use App\Http\Controllers\LikeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -34,13 +35,16 @@ Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
     Route::view('/post/create','/post/create');
     Route::view('/post/edit','/post/edit');
     Route::view('/post/update','/post/update');
-	Route::get('/post/userpost/{post}', [PostController::class, 'userpost'])->name('post.userpost');
+	Route::get('/post/userpost/{post}',[PostController::class,'userpost']);
 
 
 
 // post-like route	
     Route::post('/like-post/{id}',[PostController::class,'likePost'])->name('like.post');
     Route::post('/unlike-post/{id}',[PostController::class,'unlikePost'])->name('unlike.post');
+ //25 date
+Route::post('/like', [LikeController::class, 'likePost'])->name('likePost');
+Route::post('/unlike', [LikeController::class, 'likePost'])->name('unlikePodt');   
 // user route
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);

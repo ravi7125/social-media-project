@@ -13,6 +13,7 @@ use App\User;
 
 class PostController extends Controller
 {
+// User post create ...    
     public function create(Request $request)
     {
         $validation = Validator::make($request->all(), [
@@ -36,9 +37,10 @@ class PostController extends Controller
 
         return redirect('post/show');
     }
+// All user post display...    
     public function show()
     {
-        $post = Post::all();
+        $post = Post::orderBy('created_at', 'desc')->get();  // User post display to descending order..
         return view('post/show', ['posts' => $post]);
     }  
 
@@ -47,7 +49,7 @@ class PostController extends Controller
     {
         return view('post.update', compact('post'));
     }
-
+// User post detail update...
     public function update(Request $request, $id)
 {
     $validation = Validator::make($request->all(), [
@@ -75,24 +77,24 @@ class PostController extends Controller
         $post->image = $image_path;
     }
         $post->save();
-    return redirect('post/userpost');
+    return redirect('post/userpost/{id}');
 }
+
+// user post delete...
     public function delete($id)
     {
         $post = Post::findOrFail($id);
         $post->delete();
-
-
+        return redirect('post/userpost/{id}');
     }
-   // post like logic
+
+// post like logic...
    public function likePost($id)
    {
        $post = Post::find($id);
        $user = Auth::user();
-   
        $like = new post_like();
        $like->user_id = $user->id;
-   
        $post->post_likes()->save();
        return redirect()->route('post.show')->with('message', 'Post liked successfully!');
    }
@@ -106,10 +108,14 @@ class PostController extends Controller
        
        return redirect()->route('post.show')->with('message','Post Like undo successfully!');
    }
+// particular auth user post display...   
    public function userpost($userId)
 {
-    $post = Post::where('user_id', $userId)->get();
+    $userId = auth()->id();
+    $post = Post::where('user_id', $userId)->orderBy('created_at', 'desc')->get();
     return view('post/userpost', ['post' => $post]);
+    // $post = Post::where('user_id', $userId)->orderBy('created_at','desc')->get(); // user post is display to descending order display
+    // return view('post/userpost', ['post' => $post]); // pass the post to the view
 }
 
 

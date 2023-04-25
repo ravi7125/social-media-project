@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('post_likes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade')->default(null); 
-            $table->foreignId('post_id')->constrained('posts')->onDelete('cascade')->onUpdate('cascade'); 
-            $table->boolean('is_like')->default(null);
+            $table->foreignId('post_id')->constrained('posts')->onDelete('cascade')->onUpdate('cascade')->default(0);
+            $table->boolean('is_like')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

@@ -43,4 +43,17 @@ public function getLikesCountAttribute()
     return $this->post_likes()->count();
 }
 
+
+
+
+// In your Post model:
+public function post_like()
+{
+    return $this->hasMany(post_like::class);
+}
+
+public function comments()
+{
+    return $this->hasMany(Comment::class);
+}
 }

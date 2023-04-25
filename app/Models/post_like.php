@@ -9,7 +9,9 @@ class post_like extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'user_id'
+        'user_id',
+        'post_id',
+        'is_like'
     ];
 
     // post like relationship
