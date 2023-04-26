@@ -9,6 +9,9 @@ class postcomment extends Model
 {
     use HasFactory;
     protected $table = 'postcomments';
+    protected $fillable = [
+        'user_id', 'post_id', 'comment'
+    ];
 
 // This Is Post Comments Relationship...    
 public function user()

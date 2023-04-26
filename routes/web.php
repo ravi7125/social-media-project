@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostLikeController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\PostcommentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,12 +37,20 @@ Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
     Route::view ('/post/create','/post/create');
     Route::view ('/post/edit','/post/edit');
     Route::view ('/post/update','/post/update');
+    Route::view ('/post/comment','/post/comment');
 // POST LIKE AND DISLIKE ROUTE ...
     Route::get('/like/{post}',         [PostlikeController::class,'like'])           ->name('postlike.like');
     Route::get('/dislike/{post}',      [PostlikeController::class,'dislike'])        ->name('postlike.dislike');
     Route::get('/post/{postId}/likes', [PostLikeController::class,'showPostLikes'])  ->name('postLikes.show');
     Route::get('/post/{post}',         [PostLikeController::class,'show'])           ->name('post.show');
     Route::get('/post/{post}',         [PostLikeController::class,'show']);
+
+
+    // Post Comment Route
+Route::post ('/post/comment/{post}',    [PostcommentController::class,'store'])->name('post.comment');
+Route::get ('/post/commentview/{post}',[PostcommentController::class,'view'])->name('post.commentview');
+// Route::put  ('/post/update/{post}',  [PostController::class,'update']) ->name('post.update');
+
 
 // USER ROUTE
 Route::group(['middleware' => 'auth'], function () {

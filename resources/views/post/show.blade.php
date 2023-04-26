@@ -86,7 +86,7 @@ body { background-color: #eee}
                             <span class="dislike-count">{{ $post->likes->where('is_dislike', true)->count() }}</span>
                         </button>
                     </a>
-                    <a class="comment-button" href="">
+                    <a class="comment-button" href="{{ route('post.commentview', $post->id) }}">
                         <button type="button" class="btn btn-link">
                             <i class="fa fa-comments-o"></i>
                             <span class="comments-count"></span>
@@ -110,6 +110,7 @@ body { background-color: #eee}
                                  </div>
                              </div>
                         </div>
+                    
                         <script>
                             document.addEventListener('DOMContentLoaded', function() {
                                 const likeButtons = document.querySelectorAll('.like-button');
