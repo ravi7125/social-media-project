@@ -25,27 +25,25 @@ Auth::routes();
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 
 // post route 
-    Route::post('/post/create',[PostController::class,'create'])->name('post.create');;
-    Route::get('/post/show',[PostController::class,'show'])->name('post.show');
-    Route::post('/post/edit/{id}',[PostController::class,'update']);
-    Route::get('/post/delete/{id}',[PostController::class,'delete']);
-    Route::get('/post/edit/{post}', [PostController::class,'edit'])->name('post.edit');
-    Route::put('/post/update/{post}',[PostController::class,'update'])->name('post.update');
-    Route::post('/upload-image', [PostController::class, 'upload']);
-    Route::view('/post/create','/post/create');
-    Route::view('/post/edit','/post/edit');
-    Route::view('/post/update','/post/update');
-	Route::get('/post/userpost/{post}',[PostController::class,'userpost']);
+    Route::post ('/post/create',         [PostController::class,'create']) ->name('post.create');;
+    Route::get  ('/post/show',           [PostController::class,'show'])   ->name('post.show');
+    Route::post ('/post/edit/{id}',      [PostController::class,'update']);
+    Route::get  ('/post/delete/{id}',    [PostController::class,'delete']);
+    Route::get  ('/post/edit/{post}',    [PostController::class,'edit'])   ->name('post.edit');
+    Route::put  ('/post/update/{post}',  [PostController::class,'update']) ->name('post.update');
+    Route::post ('/upload-image',        [PostController::class,'upload']);
+    Route::get  ('/post/userpost/{post}',[PostController::class,'userpost']);
+    Route::view ('/post/create','/post/create');
+    Route::view ('/post/edit','/post/edit');
+    Route::view ('/post/update','/post/update');
+// POST LIKE AND DISLIKE ROUTE ...
+    Route::get('/like/{post}',         [PostlikeController::class,'like'])           ->name('postlike.like');
+    Route::get('/dislike/{post}',      [PostlikeController::class,'dislike'])        ->name('postlike.dislike');
+    Route::get('/post/{postId}/likes', [PostLikeController::class,'showPostLikes'])  ->name('postLikes.show');
+    Route::get('/post/{post}',         [PostLikeController::class,'show'])           ->name('post.show');
+    Route::get('/post/{post}',         [PostLikeController::class,'show']);
 
-
-
-// post-like route	
-    Route::post('/like-post/{id}',[PostController::class,'likePost'])->name('like.post');
-    Route::post('/unlike-post/{id}',[PostController::class,'unlikePost'])->name('unlike.post');
- //25 date
-Route::post('/like', [LikeController::class, 'likePost'])->name('likePost');
-Route::post('/unlike', [LikeController::class, 'likePost'])->name('unlikePodt');   
-// user route
+// USER ROUTE
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'App\Http\Controllers\ProfileController@edit']);
@@ -56,5 +54,4 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('table-list', function () {return view('pages.tables');})->name('table');
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
-
 

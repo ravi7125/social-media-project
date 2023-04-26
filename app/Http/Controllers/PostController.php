@@ -87,36 +87,13 @@ class PostController extends Controller
         $post->delete();
         return redirect('post/userpost/{id}');
     }
-
-// post like logic...
-   public function likePost($id)
-   {
-       $post = Post::find($id);
-       $user = Auth::user();
-       $like = new post_like();
-       $like->user_id = $user->id;
-       $post->post_likes()->save();
-       return redirect()->route('post.show')->with('message', 'Post liked successfully!');
-   }
-   
-
-   public function unlikePost($id)
-   {
-       $post = Post::find($id);
-       $post->unlike();
-       $post->save();
-       
-       return redirect()->route('post.show')->with('message','Post Like undo successfully!');
-   }
 // particular auth user post display...   
    public function userpost($userId)
 {
     $userId = auth()->id();
     $post = Post::where('user_id', $userId)->orderBy('created_at', 'desc')->get();
     return view('post/userpost', ['post' => $post]);
-    // $post = Post::where('user_id', $userId)->orderBy('created_at','desc')->get(); // user post is display to descending order display
-    // return view('post/userpost', ['post' => $post]); // pass the post to the view
+    
 }
-
 
 }

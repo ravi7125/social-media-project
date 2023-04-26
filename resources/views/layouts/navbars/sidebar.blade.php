@@ -105,12 +105,12 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/post/userpost/{id}">
-                        <i class="ni ni-circle-08 text-pink"></i> {{ __('User Post') }}
+                        <i class="ni ni-circle-08 text-pink"></i> {{ __('Post') }}
                     </a>
                 </li>   
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('post.show') }}">
-                        <i class="ni ni-circle-08 text-pink"></i> {{ __('user Feeds') }}
+                        <i class="ni ni-circle-08 text-pink"></i> {{ __('Feeds') }}
                     </a>
                 </li> 
                 <li class="nav-item">

@@ -5,9 +5,38 @@
      <!DOCTYPE html>
      <html lang="en">
      <head>
-        <style>
-            body{background-color:#eee}.time{font-size: 9px !important}.socials i{margin-right: 14px;font-size: 17px;color: #d2c8c8;cursor: pointer}.feed-image img{width: 100%;height: auto}
-        </style>
+ <style>
+body{background-color:#eee}.time{font-size: 9px !important}.socials i{margin-right: 14px;font-size: 17px;color: #d2c8c8;cursor: pointer}.feed-image img{width: 100%;height: auto}
+body { background-color: #eee}
+.time {
+    font-size: 9px !important
+}
+    
+.like-button {
+    background-color: #d9f634;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+}
+.dislike-button {
+    background-color: #090808;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+}
+.comment-button {
+    background-color: #d9f634;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+}
+/* .like-button:hover {
+    background-color: rgb(27, 27, 152);
+} */
+.dislike-button {
+    background-color: #dbf512;
+}
+       </style>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -36,33 +65,45 @@
                         </div>
                         <div class="p-2 px-3"><span>{{ $post->title }}</span></div>
                         <div class="feed-image p-2 px-3"><img class="img-fluid img-responsive" src="{{ Storage::url($post->image) }}"></div>
-                       
-                        <div >
-                            <p id="likesCounts"> {{$post->post_like->count() ?: 0 }} </p>
-                          </div>                 
-                          <form action="{{route('likePost')}}" method="POST" class="like" id="likePostForm">
-                                                  @csrf                    
-                                              <div class="post-options">
-                                                  <div class="post-option">
-                                                      {{-- @if($post->likes && $post->likes->user_id == auth()->user->id) --}}
-                                                      {{-- <span class="material-icons" style="margin-top: -15px;"><svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 329.523 291.435"><path d="M320.059 159.554c16.697-16.622 11.538-50.242-17.372-50.242l-76.067.055c2.876-16.12 7.061-42.817 6.891-45.342-1.59-23.875-16.832-52.937-17.475-54.132-2.77-5.166-16.793-12.182-30.9-9.166-18.252 3.903-20.115 15.529-20.038 18.736 0 0 .8 31.829.876 40.309-8.712 19.155-38.781 69.482-47.911 73.36a13.894 13.894 0 0 0-7.217-2.025H14.725C6.592 131.107 0 137.698 0 145.83l.012 132.824c.569 7.166 6.648 12.781 13.842 12.781h86.296c7.652 0 13.88-6.226 13.88-13.877v-4.407s3.21-.22 4.658.698c5.55 3.525 12.417 7.961 21.358 7.961h128.832c48.137 0 42.972-42.74 38.583-48.586 8.132-8.867 13.166-24.48 6.296-36.832 5.319-5.582 14.613-20.941 6.302-36.838z" fill="#37393d"/><path d="M300.508 123.249H209.68c3.506-13.917 9.975-58.275 9.975-58.275-1.467-21.533-15.869-48.553-15.869-48.553-17.117-7.204-24.811 2.678-24.811 2.678s.889 34.219.889 42.125c0 7.907-39.113 71.123-48.669 79.266-5.064 4.317-14.156 10.25-21.56 14.86v102.023l5.932.006c6.829 0 15.219 10.551 24.48 10.551l131.024-.057c26.333 0 30.526-29.662 13.148-32.51l.775-3.275c16.662-1.793 26.797-28.141 5.527-33.546l.781-3.286c15.902-1.674 27.714-27.246 5.521-33.552l.781-3.281c20.892-3.297 25.15-35.17 2.904-35.174z" fill="#0000FF"/><path d="M296.824 161.704l.781-3.281c20.891-3.296 25.149-35.169 2.903-35.174h-43.877c22.251.004 17.992 31.878-2.899 35.174l-.337 1.948c22.194 6.305 9.934 33.211-5.968 34.885l-.337 1.954c21.273 5.404 10.689 33.085-5.971 34.878l-.329 1.941c17.381 2.847 12.737 33.844-13.597 33.844l-87.411.036c.089.003.178.021.264.021l131.024-.057c26.333 0 30.526-29.662 13.148-32.51l.775-3.275c16.662-1.793 26.797-28.141 5.527-33.546l.781-3.286c15.905-1.674 27.716-27.247 5.523-33.552z" fill="#0000FF"/><path fill="#0000FF" d="M13.854 144.989h86.497v132.563H13.854z"/><path d="M13.854 144.989v132.563h86.497V144.989H13.854zM94.78 271.99H19.421V162.125L94.78 162v109.99z" fill="#0000FF"/><path d="M122.701 260.007V146.846c-.192.133-12.115 7.913-13.066 8.503v102.023l5.932.006c2.221 0 4.604 1.125 7.134 2.629z" opacity=".5" fill="#0000FF"/><path d="M191.609 13.794h-.006c.062.248 10.69 39.638 10.69 45.301 0 5.667-32.253 53.75-27.936 59.836 5.882 8.286 35.322 4.317 35.322 4.317 3.506-13.917 9.975-58.275 9.975-58.275-1.467-21.533-15.869-48.553-15.869-48.553-.573-.242-5.495-2.63-12.176-2.626z" fill="#0000FF"/></svg></span> --}}
-                                                      {{-- @else --}}
-                                                      <span class="material-icons" style="margin-top: -15px;"><svg xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" viewBox="0 0 329.523 291.435"><path d="M320.059 159.554c16.697-16.622 11.538-50.242-17.372-50.242l-76.067.055c2.876-16.12 7.061-42.817 6.891-45.342-1.59-23.875-16.832-52.937-17.475-54.132-2.77-5.166-16.793-12.182-30.9-9.166-18.252 3.903-20.115 15.529-20.038 18.736 0 0 .8 31.829.876 40.309-8.712 19.155-38.781 69.482-47.911 73.36a13.894 13.894 0 0 0-7.217-2.025H14.725C6.592 131.107 0 137.698 0 145.83l.012 132.824c.569 7.166 6.648 12.781 13.842 12.781h86.296c7.652 0 13.88-6.226 13.88-13.877v-4.407s3.21-.22 4.658.698c5.55 3.525 12.417 7.961 21.358 7.961h128.832c48.137 0 42.972-42.74 38.583-48.586 8.132-8.867 13.166-24.48 6.296-36.832 5.319-5.582 14.613-20.941 6.302-36.838z" fill="#37393d"/><path d="M300.508 123.249H209.68c3.506-13.917 9.975-58.275 9.975-58.275-1.467-21.533-15.869-48.553-15.869-48.553-17.117-7.204-24.811 2.678-24.811 2.678s.889 34.219.889 42.125c0 7.907-39.113 71.123-48.669 79.266-5.064 4.317-14.156 10.25-21.56 14.86v102.023l5.932.006c6.829 0 15.219 10.551 24.48 10.551l131.024-.057c26.333 0 30.526-29.662 13.148-32.51l.775-3.275c16.662-1.793 26.797-28.141 5.527-33.546l.781-3.286c15.902-1.674 27.714-27.246 5.521-33.552l.781-3.281c20.892-3.297 25.15-35.17 2.904-35.174z" fill="#fff"/><path d="M296.824 161.704l.781-3.281c20.891-3.296 25.149-35.169 2.903-35.174h-43.877c22.251.004 17.992 31.878-2.899 35.174l-.337 1.948c22.194 6.305 9.934 33.211-5.968 34.885l-.337 1.954c21.273 5.404 10.689 33.085-5.971 34.878l-.329 1.941c17.381 2.847 12.737 33.844-13.597 33.844l-87.411.036c.089.003.178.021.264.021l131.024-.057c26.333 0 30.526-29.662 13.148-32.51l.775-3.275c16.662-1.793 26.797-28.141 5.527-33.546l.781-3.286c15.905-1.674 27.716-27.247 5.523-33.552z" fill="#eaebf5"/><path fill="#7082ad" d="M13.854 144.989h86.497v132.563H13.854z"/><path d="M13.854 144.989v132.563h86.497V144.989H13.854zM94.78 271.99H19.421V162.125L94.78 162v109.99z" fill="#7c8cb0"/><path d="M122.701 260.007V146.846c-.192.133-12.115 7.913-13.066 8.503v102.023l5.932.006c2.221 0 4.604 1.125 7.134 2.629z" opacity=".5" fill="#d0d1d0"/><path d="M191.609 13.794h-.006c.062.248 10.69 39.638 10.69 45.301 0 5.667-32.253 53.75-27.936 59.836 5.882 8.286 35.322 4.317 35.322 4.317 3.506-13.917 9.975-58.275 9.975-58.275-1.467-21.533-15.869-48.553-15.869-48.553-.573-.242-5.495-2.63-12.176-2.626z" fill="#eaebf5"/></svg></span>
-                                                      {{-- @endif --}}
-                                                      <input type="hidden" class="post_like" id="post_like" name="post_like" value="{{$post->id}}"/>
-                                                      <button id="reloader" type="submit" style="border: none; background-color:transparent; color:#737373;"><p>post_like</p></button>
-                                                      {{-- <button type="submit" style="border: none; background-color:transparent;"><p class="{{$post->isLikedBy(current_user()) ? 'text-primary'}}">Like</p></button> --}}
-                                                  </div>
-                                                  <div class="post-option">
-                                                      <span class="material-icons"><i data-visualcompletion="css-img" class="hu5pjgll m6k467ps" style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/y4/r/zz_vrFBDgEM.png&quot;); background-position: 0px -259px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block;"></i></i></span>
-                                                      <p class="">Comment</p>
-                                                  </div>
-                                                  <div class="post-option">
-                                                      <span class="material-icons"><i data-visualcompletion="css-img" class="hu5pjgll m6k467ps" style="background-image: url(&quot;https://static.xx.fbcdn.net/rsrc.php/v3/y4/r/zz_vrFBDgEM.png&quot;); background-position: 0px -316px; background-size: auto; width: 18px; height: 18px; background-repeat: no-repeat; display: inline-block;"></i></span>
-                                                      <p>Share</p>
-                                                  </div>
-                                              </div>
-                                              </form>
+
+
+                    {{-- <a onclick="Toggle1(this)" class="btn" href="{{ url('like/'.$post->id) }}">
+                    <i class="fa fa-thumbs-o-up thumbs-icon {{ isset($postlike) && $postlike->is_like ? 'fa-thumbs' : '' }}" aria-hidden="true"></i>
+                    </a>
+                    <a onclick="Toggle1(this)" class="btn" href="{{ url('like/'.$post->id) }}">
+                        <i class="fa fa-thumbs-o-down thumbs-icon {{ isset($postlike) && $postlike->is_dislike ? 'fa-thumbs' : '' }}" aria-hidden="true"></i>
+                    </a> --}}
+                    
+                    <a class="like-button" href="{{ url('like/'.$post->id) }}">
+                        <button type="button" class="btn btn-link">
+                            <i class="fa fa-thumbs-up"></i>
+                            <span class="like-count">{{ $post->likes->where('is_like', true)->count() }}</span>
+                        </button>
+                    </a>
+                    <a class="dislike-button" href="{{ url('dislike/'.$post->id) }}">
+                        <button type="button" class="btn btn-link">
+                            <i class="fa fa-thumbs-down"></i>
+                            <span class="dislike-count">{{ $post->likes->where('is_dislike', true)->count() }}</span>
+                        </button>
+                    </a>
+                    <a class="comment-button" href="">
+                        <button type="button" class="btn btn-link">
+                            <i class="fa fa-comments-o"></i>
+                            <span class="comments-count"></span>
+                        </button>
+                    </a>
+                
+                    {{-- <p><strong>Like:</strong> <span class="like-count">{{ $post->likes->where('is_like', true)->count() }}</span></p> --}}
+                    {{-- <p><strong>Dislike:</strong> <span class="dislike-count">{{ $post->likes->where('is_dislike', true)->count() }}</span></p> --}}
+                    
+                    
+                  {{--                    
+                    <a class="dislike-button" href="" data-post-id="{{ $post->id }}" data-like="{{ $post->likedBy(Auth::user()) ? 'true' : 'false' }}" data-dislike="{{ $post->dislikedBy(Auth::user()) ? 'true' : 'false' }}">
+                        <i class="fa {{ $post->dislikedBy(Auth::user()) ? 'fa fa-comments-o' : 'fa fa-comments-o' }} comments-icon"></i>
+                        <span class="dislike-count">{{ $post->dislikesCount() }}</span>
+                    </a> --}}
+                  
+
                                             <div class="p-2 px-3"><span>{{ $post->content }}</span></div>
                                         </div>
                                     </div>
@@ -70,21 +111,59 @@
                              </div>
                         </div>
                         <script>
-                            $(".like").on('submit',function(e){
-                            e.preventDefault();
-                            var post_like = $('.post_like').val();
-                            document.getElementById('likesCounts').innerHTML = "";
-                            $.ajax({
-                                    type:'POST',
-                                    url:"{{ route('likePost') }}",
-                                    data:{
-                                        "_token": "{{ csrf_token() }}",
-                                        post_like: post_like,
-                                    },
-                                    success:function(data){
-                                        console.log(data);
-                                        $('#likesCounts').html(data.post_like);
-                                    }
+                            document.addEventListener('DOMContentLoaded', function() {
+                                const likeButtons = document.querySelectorAll('.like-button');
+                                likeButtons.forEach(likeButton => {
+                                    likeButton.addEventListener('click', function() {
+                                        const postID = this.dataset.postId;
+                                        const isLike = this.dataset.like === 'true';
+                                        const isDislike = this.dataset.dislike === 'true';
+                                        fetch(`/like/${postID}`, {
+                                            method: 'POST'
+                                            , type: 'POST'
+                                            , body: JSON.stringify({
+                                                is_like: isLike
+                                                , is_dislike: isDislike
+                                            })
+                                            , headers: {
+                                                'Content-Type': 'application/json'
+                                                , 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                                            }
+                                        }).then(response => {
+                                            if (response.ok) {
+                                                return response.json();
+                                            } else {
+                                                throw new Error('Failed to update like count');
+                                            }
+                                        }).then(data => {
+                                            const likeCountElement = this.querySelector('.like-count');
+                                            if (likeCountElement) {
+                                                likeCountElement.innerText = data.likeCount;
+                                            }
+                                            const likeIconElement = this.querySelector('.like-icon');
+                                            if (likeIconElement) {
+                                                if (data.isLiked) {
+                                                    likeIconElement.classList.remove('fa-thumbs-o-up');
+                                                    likeIconElement.classList.add('fa-thumbs-up');
+                                                } else {
+                                                    likeIconElement.classList.remove('fa-thumbs-up');
+                                                    likeIconElement.classList.add('fa-thumbs-o-up');
+                                                }
+                                            }
+                                            const dislikeIconElement = this.querySelector('.dislike-icon');
+                                            if (dislikeIconElement) {
+                                                if (data.isDisliked) {
+                                                    dislikeIconElement.classList.remove('fa-thumbs-o-down');
+                                                    dislikeIconElement.classList.add('fa-thumbs-down');
+                                                } else {
+                                                    dislikeIconElement.classList.remove('fa-thumbs-down');
+                                                    dislikeIconElement.classList.add('fa-thumbs-o-down');
+                                                }
+                                            }
+                                        }).catch(error => {
+                                            console.error(error);
+                                        });
+                                    });
                                 });
                             });
                         </script>

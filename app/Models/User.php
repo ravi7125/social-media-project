@@ -53,5 +53,16 @@ class User extends Authenticatable
     {
         return $this->belongsTo(User::class);
     }
+// This Is Post Like Relationship   .    
+    public function likes()
+    {
+        return $this->hasMany(post_like::class);
+    }
+// This Is Post Comments Relationship...
+    public function comments()
+    {
+        return $this->hasMany(PostComment::class);
+    }
+
     
 }
