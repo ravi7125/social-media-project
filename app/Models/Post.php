@@ -30,6 +30,12 @@ class Post extends Model
     {
         return $this->hasMany(PostComment::class);
     }
+// this is postlikecomment relation.....
+
+public function commentlikes()
+{
+  return $this->hasMany(postcommentlikes::class);
+}
 
 
 }

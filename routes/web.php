@@ -5,6 +5,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\PostLikeController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostcommentController;
+use App\Http\Controllers\PostcommentlikeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -44,12 +45,10 @@ Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
     Route::get('/post/{postId}/likes', [PostLikeController::class,'showPostLikes'])  ->name('postLikes.show');
     Route::get('/post/{post}',         [PostLikeController::class,'show'])           ->name('post.show');
     Route::get('/post/{post}',         [PostLikeController::class,'show']);
+// Post Comment Route
+   Route::post ('/post/comment/{post}',    [PostcommentController::class,'store'])->name('post.comment');
+   Route::get ('/post/commentview/{post}',[PostcommentController::class,'view'])->name('post.commentview');
 
-
-    // Post Comment Route
-Route::post ('/post/comment/{post}',    [PostcommentController::class,'store'])->name('post.comment');
-Route::get ('/post/commentview/{post}',[PostcommentController::class,'view'])->name('post.commentview');
-// Route::put  ('/post/update/{post}',  [PostController::class,'update']) ->name('post.update');
 
 
 // USER ROUTE
@@ -63,4 +62,15 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('table-list', function () {return view('pages.tables');})->name('table');
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
+
+
+
+
+
+// coment like and dislike
+// Route::get('/commentlike/{post}',        [PostcommentController::class,'commentlike'])           ->name('commentlike.like');
+// Route::get('/commentdislike/{post}',     [PostcommentController::class,'commentdislike'])        ->name('commentlike.dislike');
+// Route::get('/post/{postId}/likes',       [PostcommentController::class,'showcommentLikes'])  ->name('commentLikes.show');
+// Route::get('/post/{post}',               [PostcommentController::class,'showcomment']);       
+Route::get('commentlike/{comment}', [PostcommentlikeController::class, 'like'])->name('commentlike');
 

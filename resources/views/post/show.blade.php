@@ -5,6 +5,7 @@
      <!DOCTYPE html>
      <html lang="en">
      <head>
+      
  <style>
 body{background-color:#eee}.time{font-size: 9px !important}.socials i{margin-right: 14px;font-size: 17px;color: #d2c8c8;cursor: pointer}.feed-image img{width: 100%;height: auto}
 body { background-color: #eee}
@@ -15,6 +16,7 @@ body { background-color: #eee}
 .like-button {
     background-color: #d9f634;
     color: #fff;
+    color: #bfd1e3;
     border: none;
     padding: 10px 20px;
 }
@@ -36,6 +38,16 @@ body { background-color: #eee}
 .dislike-button {
     background-color: #dbf512;
 }
+.like-icon.active {
+    color: blue;
+}
+.dislike-icon.active {
+    color: red;
+}
+.like-icon, .dislike-icon, .comment-icon {
+    color: white;
+}
+
        </style>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -73,22 +85,23 @@ body { background-color: #eee}
                     <a onclick="Toggle1(this)" class="btn" href="{{ url('like/'.$post->id) }}">
                         <i class="fa fa-thumbs-o-down thumbs-icon {{ isset($postlike) && $postlike->is_dislike ? 'fa-thumbs' : '' }}" aria-hidden="true"></i>
                     </a> --}}
-                    
+                
                     <a class="like-button" href="{{ url('like/'.$post->id) }}">
                         <button type="button" class="btn btn-link">
-                            <i class="fa fa-thumbs-up"></i>
+                            <i class="fa fa-thumbs-up like-icon{{ $post->likes->where('user_id', Auth::id())->where('is_like', true)->count() > 0 ? ' active' : '' }}" style="font-size:30px"></i>
                             <span class="like-count">{{ $post->likes->where('is_like', true)->count() }}</span>
                         </button>
                     </a>
                     <a class="dislike-button" href="{{ url('dislike/'.$post->id) }}">
                         <button type="button" class="btn btn-link">
-                            <i class="fa fa-thumbs-down"></i>
+                            <i class="fa fa-thumbs-down dislike-icon{{ $post->likes->where('user_id', Auth::id())->where('is_dislike', true)->count() > 0 ? ' active' : '' }}" style="font-size:30px"></i>
                             <span class="dislike-count">{{ $post->likes->where('is_dislike', true)->count() }}</span>
                         </button>
                     </a>
+                    
                     <a class="comment-button" href="{{ route('post.commentview', $post->id) }}">
                         <button type="button" class="btn btn-link">
-                            <i class="fa fa-comments-o"></i>
+                            <i class="fa fa-comments-o" style="font-size:30px"></i>
                             <span class="comments-count"></span>
                         </button>
                     </a>
@@ -97,7 +110,7 @@ body { background-color: #eee}
                     {{-- <p><strong>Dislike:</strong> <span class="dislike-count">{{ $post->likes->where('is_dislike', true)->count() }}</span></p> --}}
                     
                     
-                  {{--                    
+                  {{--  comment...                  
                     <a class="dislike-button" href="" data-post-id="{{ $post->id }}" data-like="{{ $post->likedBy(Auth::user()) ? 'true' : 'false' }}" data-dislike="{{ $post->dislikedBy(Auth::user()) ? 'true' : 'false' }}">
                         <i class="fa {{ $post->dislikedBy(Auth::user()) ? 'fa fa-comments-o' : 'fa fa-comments-o' }} comments-icon"></i>
                         <span class="dislike-count">{{ $post->dislikesCount() }}</span>

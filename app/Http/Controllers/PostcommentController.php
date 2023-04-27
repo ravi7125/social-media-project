@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\post_like;
 use App\Models\Post;
 use App\Models\postcomment;
+
 use Illuminate\Support\Facades\Auth;
 
 class PostcommentController extends Controller
@@ -25,8 +26,14 @@ class PostcommentController extends Controller
     
     public function view(Post $post)
     {
-        $postcomment = postcomment::where('post_id', $post->id)->get();
-        return view('post.comment', compact('post', 'postcomment'));
+        $postcomment = Postcomment::where('post_id', $post->id)->orderBy('created_at', 'desc')->get();
+        $latestComment = $postcomment->first();
+        return view('post.comment', compact('post', 'postcomment', 'latestComment'));
     }
     
+    
+
+
+
 }
+
