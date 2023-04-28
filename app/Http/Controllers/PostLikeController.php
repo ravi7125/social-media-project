@@ -62,15 +62,21 @@ class PostLikeController extends Controller
         $dislikeCount = $post->likes->where('is_dislike', 1)->count();
         return redirect('/post/show')->with('success', 'Post disliked success');
     }  
+
     public function show(Post $post)
     {
         $post_like = post_like::where('post_id', $post->id)->first();
 
         return view('/post/show');
     }
+
+
     public function showPostLikes($postId)
     {
         $post_likes = post_like::where('post_id', $postId)->get();
         return view('postLikes', ['post_likes' => $post_likes]);
     }
+
+
+
 }

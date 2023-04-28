@@ -12,8 +12,8 @@
     <style>
      /* Your custom CSS styles */
      .container {
-     margin: 15px; /* center horizontally */
-     padding:100px; /* add padding */
+     margin: 15px; 
+     padding:100px; 
     }
     </style>
     <title>Document</title>
@@ -24,7 +24,6 @@
             <div class="col-md-8 offset-md-2">
                 <h1>Create Post</h1>
                 <form action="/post/create" method="POST" enctype="multipart/form-data">
-
                     @csrf
                     <div class="form-group">
                         <label for="title">Title:</label>
@@ -44,14 +43,9 @@
         </div>
     </div>
 </body>
-
-   </html>
-
-
-@include('layouts.footers.auth')
-   
+</html>
+@include('layouts.footers.auth')  
 @endsection
-
 @push('js')
     <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.min.js"></script>
     <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.extension.js"></script>

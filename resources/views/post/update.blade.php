@@ -1,11 +1,10 @@
 
     @extends('layouts.app')
-
     @section('content')
         @include('layouts.headers.cards')
-       <!DOCTYPE html>
-       <html lang="en">
-       <head>
+        <!DOCTYPE html>
+        <html lang="en">
+        <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -17,12 +16,11 @@
          padding:100px; /* add padding */
         }
         </style>
-        <title></title>
+        <title>Social Media</title>
        </head>
       <body>
         <div class="container">
             <h1>Edit Post</h1>
-            {{-- <form action="" method="POST" > --}}
                 <form action="{{ route('post.update', $post) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
@@ -52,16 +50,11 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Update Post</button>
             </form>
-        </div>
-    
+        </div>  
 </body>
 </html>
-
-
-@include('layouts.footers.auth')
-   
+@include('layouts.footers.auth')   
 @endsection
-
 @push('js')
     <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.min.js"></script>
     <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.extension.js"></script>

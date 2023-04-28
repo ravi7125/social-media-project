@@ -10,7 +10,7 @@ class Post extends Model
 {
     use softDeletes;
     use HasFactory;
-  
+    protected $table = 'posts';
     protected $fillable = [
         'user_id', 'title', 'content', 'image'
     ];
@@ -28,8 +28,19 @@ class Post extends Model
 // This Is Post comment Relationship    
     public function comments()
     {
-        return $this->hasMany(PostComment::class);
+        return $this->hasMany(postcomment::class);
     }
+
+// COMMENT LIKE RELATIONSHIP..
+    public function postcomment()
+    {
+        return $this->hasManyThrough(postcomment::class);
+     }
+
+
+
+
+
 // this is postlikecomment relation.....
 
 public function commentlikes()

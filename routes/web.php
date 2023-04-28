@@ -48,7 +48,7 @@ Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('home');
 // Post Comment Route
    Route::post ('/post/comment/{post}',    [PostcommentController::class,'store'])->name('post.comment');
    Route::get ('/post/commentview/{post}',[PostcommentController::class,'view'])->name('post.commentview');
-
+   Route::get  ('/commentdelete/{comment}',    [PostcommentController::class,'delete']);
 
 
 // USER ROUTE
@@ -63,14 +63,6 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
 
-
-
-
-
 // coment like and dislike
-// Route::get('/commentlike/{post}',        [PostcommentController::class,'commentlike'])           ->name('commentlike.like');
-// Route::get('/commentdislike/{post}',     [PostcommentController::class,'commentdislike'])        ->name('commentlike.dislike');
-// Route::get('/post/{postId}/likes',       [PostcommentController::class,'showcommentLikes'])  ->name('commentLikes.show');
-// Route::get('/post/{post}',               [PostcommentController::class,'showcomment']);       
-Route::get('commentlike/{comment}', [PostcommentlikeController::class, 'like'])->name('commentlike');
-
+Route::get('/commentis-like/{post_id}/{comment_id?}', [PostcommentlikeController::class, 'postcommentlike'])->name('postlike.postcommentlike');
+Route::get('/commentdis-like/{post}/{postcomment?}', [PostcommentlikeController::class, 'postcommentdisLike'])->name('postlike.postcommentdisLike');

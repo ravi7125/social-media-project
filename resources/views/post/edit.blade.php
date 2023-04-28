@@ -1,6 +1,5 @@
 
     @extends('layouts.app')
-
     @section('content')
         @include('layouts.headers.cards')
        <!DOCTYPE html>
@@ -52,16 +51,11 @@
                 </div>
                 <button type="submit" class="btn btn-primary">Update Post</button>
             </form>
-        </div>
-    
-</body>
-</html>
-
-
+        </div>  
+    </body>
+ </html>
 @include('layouts.footers.auth')
-   
 @endsection
-
 @push('js')
     <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.min.js"></script>
     <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.extension.js"></script>

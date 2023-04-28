@@ -63,6 +63,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(PostComment::class);
     }
+// This is post comment like relationship
+public function postcommentlike(){
+
+    return $this->hasMany(postcommentlike::class);
+}    
 
     
 }

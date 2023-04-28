@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade')->default(null); 
             $table->foreignId('post_id')->constrained('posts')->onDelete('cascade')->onUpdate('cascade')->default(0);
-            $table->foreignId('comment_id')->constrained('postcomments')->onDelete('cascade')->onUpdate('cascade')->default(0);
+            $table->foreignId('postcomment_id')->nullable()->constrained('postcomments');
             $table->boolean('is_like')->default(0);
             $table->boolean('is_dislike')->default(0);
             $table->timestamps();

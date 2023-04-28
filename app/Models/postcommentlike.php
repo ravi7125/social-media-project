@@ -14,8 +14,9 @@ class postcommentlike extends Model
     protected $fillable = [
         'post_id',
         'user_id',
-        'comment_id',
-        'is_like'
+        'postcomment_id',
+        'is_like',
+        'is_dislike'
     ];
 
     public function post()
@@ -25,13 +26,21 @@ class postcommentlike extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function comment()
     {
         return $this->belongsTo(postcomment::class);
     }
+
+//
+public function postcomment()
+{
+    return $this->belongsTo(postcomment::class);
+}
+
+
 
 
 }

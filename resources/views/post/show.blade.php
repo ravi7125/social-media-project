@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
     @include('layouts.headers.cards')
      <!DOCTYPE html>
@@ -39,16 +38,18 @@ body { background-color: #eee}
     background-color: #dbf512;
 }
 .like-icon.active {
-    color: blue;
+    color: rgb(60, 60, 226);
 }
 .dislike-icon.active {
-    color: red;
+    color: rgb(225, 76, 76);
 }
-.like-icon, .dislike-icon, .comment-icon {
+.like-icon, .dislike-icon {
     color: white;
 }
-
-       </style>
+.fa-comments-o {
+  color: white;
+}
+    </style>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -67,63 +68,40 @@ body { background-color: #eee}
                 <div class="feed p-2">
                     <div class="bg-white border mt-2">
                         <div>
-                            <div class="d-flex flex-row justify-content-between align-items-center p-2 border-bottom">
-                                <div class="d-flex flex-row align-items-center feed-text px-2"><img class="rounded-circle" src="{{ Storage::url($post->image) }}" width="38">
+                            <div class="d-flex flex-row justify-content-between align-items-center p-2 border-bottom" style="background-color: #77a29d;">
+                                <div class="d-flex flex-row align-items-center feed-text px-2" ><img class="rounded-circle" src="{{ Storage::url($post->image) }}" width="38">
                                     <div class="d-flex flex-column flex-wrap ml-2"><span class="font-weight-bold">{{ $post->user->name }}</span><span class="text-black-50 time"></span></div>
-                                </div>               
+                                       </div>               
                                     {{-- <div class="feed-icon px-2"> <button class="btn btn-danger"><a class="text-white" type="button" href={{'delete/'.$post['id']}}>Delete</a>
                                     <div class="feed-icon px-2"> <button class="btn btn-success"><a class="text-white" type="button" href={{'edit/'.$post['id']}}>Edit</a>
-                            </div> --}}
-                        </div>
-                        <div class="p-2 px-3"><span>{{ $post->title }}</span></div>
-                        <div class="feed-image p-2 px-3"><img class="img-fluid img-responsive" src="{{ Storage::url($post->image) }}"></div>
-
-
-                    {{-- <a onclick="Toggle1(this)" class="btn" href="{{ url('like/'.$post->id) }}">
-                    <i class="fa fa-thumbs-o-up thumbs-icon {{ isset($postlike) && $postlike->is_like ? 'fa-thumbs' : '' }}" aria-hidden="true"></i>
-                    </a>
-                    <a onclick="Toggle1(this)" class="btn" href="{{ url('like/'.$post->id) }}">
-                        <i class="fa fa-thumbs-o-down thumbs-icon {{ isset($postlike) && $postlike->is_dislike ? 'fa-thumbs' : '' }}" aria-hidden="true"></i>
-                    </a> --}}
-                
-                    <a class="like-button" href="{{ url('like/'.$post->id) }}">
-                        <button type="button" class="btn btn-link">
-                            <i class="fa fa-thumbs-up like-icon{{ $post->likes->where('user_id', Auth::id())->where('is_like', true)->count() > 0 ? ' active' : '' }}" style="font-size:30px"></i>
-                            <span class="like-count">{{ $post->likes->where('is_like', true)->count() }}</span>
-                        </button>
-                    </a>
-                    <a class="dislike-button" href="{{ url('dislike/'.$post->id) }}">
-                        <button type="button" class="btn btn-link">
-                            <i class="fa fa-thumbs-down dislike-icon{{ $post->likes->where('user_id', Auth::id())->where('is_dislike', true)->count() > 0 ? ' active' : '' }}" style="font-size:30px"></i>
-                            <span class="dislike-count">{{ $post->likes->where('is_dislike', true)->count() }}</span>
-                        </button>
-                    </a>
-                    
-                    <a class="comment-button" href="{{ route('post.commentview', $post->id) }}">
-                        <button type="button" class="btn btn-link">
-                            <i class="fa fa-comments-o" style="font-size:30px"></i>
-                            <span class="comments-count"></span>
-                        </button>
-                    </a>
-                
-                    {{-- <p><strong>Like:</strong> <span class="like-count">{{ $post->likes->where('is_like', true)->count() }}</span></p> --}}
-                    {{-- <p><strong>Dislike:</strong> <span class="dislike-count">{{ $post->likes->where('is_dislike', true)->count() }}</span></p> --}}
-                    
-                    
-                  {{--  comment...                  
-                    <a class="dislike-button" href="" data-post-id="{{ $post->id }}" data-like="{{ $post->likedBy(Auth::user()) ? 'true' : 'false' }}" data-dislike="{{ $post->dislikedBy(Auth::user()) ? 'true' : 'false' }}">
-                        <i class="fa {{ $post->dislikedBy(Auth::user()) ? 'fa fa-comments-o' : 'fa fa-comments-o' }} comments-icon"></i>
-                        <span class="dislike-count">{{ $post->dislikesCount() }}</span>
-                    </a> --}}
-                  
-
+                                    </div> --}}
+                                        </div>
+                                        <div class="p-2 px-3"><span>{{ $post->title }}</span></div>
+                                        <div class="feed-image p-2 px-3" ><img class="img-fluid img-responsive" src="{{ Storage::url($post->image) }}"></div>
+                                       <a class="like-button" href="{{ url('like/'.$post->id) }}">
+                                                <button type="button" class="btn btn-link">
+                                                    <i class="fa fa-thumbs-up like-icon{{ $post->likes->where('user_id', Auth::id())->where('is_like', true)->count() > 0 ? ' active' : '' }}" style="font-size:30px"></i>
+                                                    <span class="like-count">{{ $post->likes->where('is_like', true)->count() }}</span>
+                                                </button>
+                                            </a>
+                                            <a class="dislike-button" href="{{ url('dislike/'.$post->id) }}">
+                                                <button type="button" class="btn btn-link">
+                                                    <i class="fa fa-thumbs-down dislike-icon{{ $post->likes->where('user_id', Auth::id())->where('is_dislike', true)->count() > 0 ? ' active' : '' }}" style="font-size:30px"></i>
+                                                    <span class="dislike-count">{{ $post->likes->where('is_dislike', true)->count() }}</span>
+                                                </button>
+                                            </a>
+                                            <a class="comment-button" href="{{ route('post.commentview', $post->id) }}">
+                                                <button type="button" class="btn btn-link">
+                                                    <i class="fa fa-comments-o" style="font-size:30px"></i>
+                                                    <span class="comments-count">0</span>
+                                                </button>
+                                            </a>
                                             <div class="p-2 px-3"><span>{{ $post->content }}</span></div>
                                         </div>
                                     </div>
                                  </div>
                              </div>
-                        </div>
-                    
+                        </div>                 
                         <script>
                             document.addEventListener('DOMContentLoaded', function() {
                                 const likeButtons = document.querySelectorAll('.like-button');
@@ -181,15 +159,13 @@ body { background-color: #eee}
                                 });
                             });
                         </script>
-@endforeach
-@include('layouts.footers.auth')
-   
-@endsection
-
-@push('js')
-    <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.min.js"></script>
+                    @endforeach
+                @include('layouts.footers.auth')
+            @endsection
+         @push('js')
+        <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.min.js"></script>
     <script src="{{ asset('argon') }}/vendor/chart.js/dist/Chart.extension.js"></script>
-@endpush
+ @endpush
 
 
 
