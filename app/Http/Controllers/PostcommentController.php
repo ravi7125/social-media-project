@@ -17,7 +17,8 @@ class PostcommentController extends Controller
         $postcomment->user_id = auth()->id();
         $postcomment->comment = $request->comment;
         $postcomment->save();
-        return redirect('/post/show');
+         return redirect()->back()->with('success','Postcomment successfully!');
+        // return redirect('/post/show');
     }
     
     public function view(Post $post) // post comment display ...

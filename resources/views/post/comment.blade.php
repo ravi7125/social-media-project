@@ -12,7 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>comments</title>
     <style>
-      <style>
+
 body{background-color:#eee}.time{font-size: 9px !important}.socials i{margin-right: 14px;font-size: 17px;color: #d2c8c8;cursor: pointer}.feed-image img{width: 100%;height: auto}
 body { background-color: #eee}.time {font-size: 9px !important}.like-button {/* background-color: #d9f634; */color: #fff;color: #bfd1e3;border: none; padding: 10px 20px;}
 .dislike-button {
@@ -110,24 +110,25 @@ body { background-color: #eee}.time {font-size: 9px !important}.like-button {/* 
                         </div>
                     </div>     
                 <p class="mt-3 mb-4 pb-2">{{ $comment->comment }}</p>
-                <a class="like-button" href="{{ url('commentis-like/'. $post->id.'/' .$comment->id) }}">
+              
+                <a class="is-like-button" href="{{ url('commentis-like/'. $post->id.'/' .$comment->id) }}">
                    <button type="button" class="btn btn-link">
                        <i class="fa fa-thumbs-up like-icon{{ $post->likes->where('user_id', Auth::id())->where('like', true)->count() > 0 ? ' active' : '' }}" style="font-size:30px"></i>
                        <span class="like-count">{{ $comment->likes ? $comment->likes->where('is_like', true)->count() : 0 }}</span>
                     </button>
                 </a>
-                <a class="dislike-button" href="{{ url('commentdis-like/'. $post->id.'/' .$comment->id) }}">
+                <a class="is-dislike-button" href="{{ url('commentdis-like/'. $post->id.'/' .$comment->id) }}">
                     <button type="button" class="btn btn-link">
                     <i class="fa fa-thumbs-down dislike-icon{{ $post->likes->where('user_id', Auth::id())->where('is_dislike', true)->count() > 0 ? ' active' : '' }}" style="font-size:30px"></i>
-                    <span class="dislike-count">{{ $post->likes->where('is_dislike', true)->count() }}</span>
+                    <span class="dislike-count">{{ $comment->likes ? $comment->likes->where('is_dislike', true)->count() : 0 }}</span>
                     </button>
                 </a>
-            {{-- <a class="comment-button" href="{{ route('post.commentview', $post->id) }}">
+            <a class="comment-button" href="{{ route('post.commentview', $post->id) }}">
                 <button type="button" class="btn btn-link">
                     <i class="fa fa-comments-o" style="font-size:30px"></i>
                     <span class="comments-count"></span>
                 </button>
-                </a> --}}
+                </a>
                 </div>
               </form>          
             </div>

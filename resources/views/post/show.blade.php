@@ -78,7 +78,8 @@ body { background-color: #eee}
                                         </div>
                                         <div class="p-2 px-3"><span>{{ $post->title }}</span></div>
                                         <div class="feed-image p-2 px-3" ><img class="img-fluid img-responsive" src="{{ Storage::url($post->image) }}"></div>
-                                       <a class="like-button" href="{{ url('like/'.$post->id) }}">
+                                           
+                                        <a class="like-button" href="{{ url('like/'.$post->id) }}">
                                                 <button type="button" class="btn btn-link">
                                                     <i class="fa fa-thumbs-up like-icon{{ $post->likes->where('user_id', Auth::id())->where('is_like', true)->count() > 0 ? ' active' : '' }}" style="font-size:30px"></i>
                                                     <span class="like-count">{{ $post->likes->where('is_like', true)->count() }}</span>
@@ -93,9 +94,10 @@ body { background-color: #eee}
                                             <a class="comment-button" href="{{ route('post.commentview', $post->id) }}">
                                                 <button type="button" class="btn btn-link">
                                                     <i class="fa fa-comments-o" style="font-size:30px"></i>
-                                                    <span class="comments-count">0</span>
+                                                    <span class="comments-count"></span>
                                                 </button>
                                             </a>
+                                            
                                             <div class="p-2 px-3"><span>{{ $post->content }}</span></div>
                                         </div>
                                     </div>

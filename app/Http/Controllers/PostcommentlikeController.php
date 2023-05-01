@@ -14,14 +14,14 @@ class PostcommentlikeController extends Controller
     {
         $comment = postcomment::find($comment_id);
         if (!$comment) {
-            
+            // handle error if comment is not found
         }
     
         $like = postcommentlike::where('user_id', Auth::id())
             ->where('post_id', $post_id)
             ->where('postcomment_id', $comment_id)
             ->first();
-       
+    
         if (!$like) {
             // This is the first click, so create a new record with is_like set to 1
             $like = postcommentlike::create([
@@ -31,23 +31,24 @@ class PostcommentlikeController extends Controller
                 'is_dislike' => 0,
                 'postcomment_id' => $comment_id,
             ]);
-            
+    
         } elseif ($like->is_like) {
-    // This is the second click to  record to set is_like to 0 update
-            $like->update(['is_like' => 0, 'is_dislike' => 1]);
+            // This is the second click, update is_like to 0
+            $like->update(['is_like' => 0]);
         } else {
-    // This is a click to record to set is_like to 1 update
-            $like->update(['is_like' => 1, 'is_dislike' => 0]);
+            // This is a click, update is_like to 1
+            $like->update(['is_dislike' => 0, 'is_like' => 1]);
         }
     
         $likeCount = postcommentlike::where('post_id', $post_id)
-        ->where('postcomment_id', $comment_id)
-        ->where('is_like', true)
-        ->count();
-        //  dd($like);
-        return redirect('/post/show');
-       
+            ->where('postcomment_id', $comment_id)
+            ->where('is_like', true)
+            ->count();
+               // dd($like);
+               return redirect()->back()->with('success','Commentlike success');
+        // return redirect('/post/show')->with('success', 'Comment liked successfully!');
     }
+    
 // This is a commentdislike logic.....
 public function postcommentdislike($post_id, $comment_id)
 {
@@ -84,10 +85,7 @@ public function postcommentdislike($post_id, $comment_id)
         ->where('is_dislike', true)
         ->count();
         // dd($dislike);
-    return redirect('/post/show');
+        // return redirect('/post/show')->with('success', 'Post liked successfully!');
+        return redirect()->back()->with('success','Comment dislike success');
 }
-
-
-
-
 }
