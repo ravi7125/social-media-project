@@ -21,17 +21,23 @@ class PostcommentController extends Controller
         // return redirect('/post/show');
     }
     
+    // public function view(Post $post) // post comment display ...
+    // {
+    //     $postcomment = Postcomment::where('post_id', $post->id)->orderBy('created_at', 'desc')->get();
+    //     $latestComment = $postcomment->first();
+    //     return view('post.comment', compact('post', 'postcomment', 'latestComment'));
+    // }
+
     public function view(Post $post) // post comment display ...
     {
-        $postcomment = Postcomment::where('post_id', $post->id)->orderBy('created_at', 'desc')->get();
+        $postcomment = postcomment::with('comment_replay')->where('post_id', $post->id)->orderBy('created_at', 'desc')->get();             
         $latestComment = $postcomment->first();
         return view('post.comment', compact('post', 'postcomment', 'latestComment'));
     }
-    
-    
+
     public function delete($id) // Only Auth user Comment delete an other user comment not delete ....   
     {
-        $postcomment = Postcomment::findOrFail($id);
+        $postcomment = postcomment::findOrFail($id);
         $postcomment->delete();
         return redirect()->back()->with('success',' User Comment deleted');
     }

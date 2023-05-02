@@ -7,10 +7,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>comments</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">     
+  <title>Social_Media</title>
     <style>
 
 body{background-color:#eee}.time{font-size: 9px !important}.socials i{margin-right: 14px;font-size: 17px;color: #d2c8c8;cursor: pointer}.feed-image img{width: 100%;height: auto}
@@ -52,6 +57,23 @@ body { background-color: #eee}.time {font-size: 9px !important}.like-button {/* 
   background-color: #dc3545;
   border-color: #dc3545;
 }
+
+
+
+/* CSS rules for the like and dislike icons */
+.like-icon.active {
+  color: blue;
+}
+
+.dislike-icon.active {
+  color: gray;
+}
+
+.like-icon, .dislike-icon {
+  color: gray;
+}
+
+
 </style>
 </head>
 <body>
@@ -87,8 +109,8 @@ body { background-color: #eee}.time {font-size: 9px !important}.like-button {/* 
     </div>
 </div>
 <div class="container mt-3 pt-4">
-    @if($postcomment->count() > 0)
-    @foreach($postcomment as $comment)       
+  @if(isset($postcomment) && $postcomment->count() > 0)
+  @foreach($postcomment as $comment)    
     <section style="background-color: #a7a7a7;"> 
         <div class="container">
             <div class="row d-flex justify-content-center">
@@ -110,25 +132,67 @@ body { background-color: #eee}.time {font-size: 9px !important}.like-button {/* 
                         </div>
                     </div>     
                 <p class="mt-3 mb-4 pb-2">{{ $comment->comment }}</p>
+
+
+{{-- 
+   @if (auth()->check() && auth()->user()->id === $comment->user_id)       
+  @foreach ($postcomment->recomment as $recomment)
+
+    <p>{{ $recomment->recomment }} <button type="button" class="btn btn-outline-secondary"><a type="submit" style="color:red"   href={{url('recomment/'.$recomment->id) }}>Delete</a></button></p>
+  @endforeach
+                    @endif --}}
+
+
+
+
+
+
+
+
+
+                <a class="like-button" href="{{ url('commentis-like/'. $post->id.'/' .$comment->id) }}">
+                  <button type="button" class="btn btn-link">
+                      <i class="fa fa-thumbs-up like-icon{{ $post->likes->where('user_id', Auth::id())->where('comment_like', true)->count() > 0 ? ' active' : '' }}" style="font-size:30px"></i>
+                      <span class="like-count">{{ $comment->likes ? $comment->likes->where('comment_like', true)->count() : 0 }}</span>
+                  </button>
+              </a>
               
-                <a class="is-like-button" href="{{ url('commentis-like/'. $post->id.'/' .$comment->id) }}">
+              <a class="dislike-button" href="{{ url('commentdis-like/'. $post->id.'/' .$comment->id) }}">
+                  <button type="button" class="btn btn-link">
+                      <i class="fa fa-thumbs-down dislike-icon{{ $post->likes->where('user_id', Auth::id())->where('comment_dislike', true)->count() > 0 ? ' active' : '' }}" style="font-size:30px"></i>
+                      <span class="dislike-count">{{ $comment->likes ? $comment->likes->where('comment_dislike', true)->count() : 0 }}</span>
+                  </button>
+              </a>
+              
+
+
+
+
+
+
+
+
+
+                {{-- <a class="like-button" href="{{ url('commentis-like/'. $post->id.'/' .$comment->id) }}">
                    <button type="button" class="btn btn-link">
                        <i class="fa fa-thumbs-up like-icon{{ $post->likes->where('user_id', Auth::id())->where('like', true)->count() > 0 ? ' active' : '' }}" style="font-size:30px"></i>
                        <span class="like-count">{{ $comment->likes ? $comment->likes->where('is_like', true)->count() : 0 }}</span>
                     </button>
                 </a>
-                <a class="is-dislike-button" href="{{ url('commentdis-like/'. $post->id.'/' .$comment->id) }}">
+                <a class="dislike-button" href="{{ url('commentdis-like/'. $post->id.'/' .$comment->id) }}">
                     <button type="button" class="btn btn-link">
                     <i class="fa fa-thumbs-down dislike-icon{{ $post->likes->where('user_id', Auth::id())->where('is_dislike', true)->count() > 0 ? ' active' : '' }}" style="font-size:30px"></i>
                     <span class="dislike-count">{{ $comment->likes ? $comment->likes->where('is_dislike', true)->count() : 0 }}</span>
                     </button>
-                </a>
-            <a class="comment-button" href="{{ route('post.commentview', $post->id) }}">
-                <button type="button" class="btn btn-link">
-                    <i class="fa fa-comments-o" style="font-size:30px"></i>
-                    <span class="comments-count"></span>
-                </button>
-                </a>
+                </a> --}}
+
+                <a class="comment-button" href="{{ url('/post/commentview/' . $post->id . '/' . $comment->id) }}">
+                  <button type="button" class="btn btn-link">
+                      <i class="fa fa-comments-o" style="font-size:30px; color: #999;"></i>
+                      <span class="comments-count"></span>
+                  </button>
+              </a>
+                             
                 </div>
               </form>          
             </div>
@@ -136,60 +200,60 @@ body { background-color: #eee}.time {font-size: 9px !important}.like-button {/* 
         </div>
       </div>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-          const dislikeButtons = document.querySelectorAll('.dislike-button');
-          dislikeButtons.forEach(dislikeButton => {
-            dislikeButton.addEventListener('click', function() {
-              const postID = this.dataset.postId;
-              const isLike = this.dataset.like === 'true';
-              const isDislike = this.dataset.dislike === 'true';
-              fetch(`/dislike/${postID}`, {
-                method: 'POST'
-                , type: 'POST'
-                , body: JSON.stringify({
-                  is_like: isLike
-                  , is_dislike: isDislike
-                })
-                , headers: {
-                  'Content-Type': 'application/json'
-                  , 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                }
-              }).then(response => {
-                if (response.ok) {
-                  return response.json();
-                } else {
-                  throw new Error('Failed to update dislike count');
-                }
-              }).then(data => {
-                const dislikeCountElement = this.querySelector('.dislike-count');
-                if (dislikeCountElement) {
-                  dislikeCountElement.innerText = data.dislikeCount;
-                }
-                const likeIconElement = this.querySelector('.like-icon');
-                if (likeIconElement) {
-                  if (data.isLiked) {
-                    likeIconElement.classList.remove('fa-thumbs-up');
-                    likeIconElement.classList.add('fa-thumbs-o-up');
-                  }
-                }
-                const dislikeIconElement = this.querySelector('.dislike-icon');
-                if (dislikeIconElement) {
-                  if (data.isDisliked) {
-                    dislikeIconElement.classList.remove('fa-thumbs-o-down');
-                    dislikeIconElement.classList.add('fa-thumbs-down');
-                  } else {
-                    dislikeIconElement.classList.remove('fa-thumbs-down');
-                    dislikeIconElement.classList.add('fa-thumbs-o-down');
-                  }
-                }
-              }).catch(error => {
-                    console.error(error);
-                   });
-                });
-            });
+   <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const dislikeButtons = document.querySelectorAll('.dislike-button');
+    dislikeButtons.forEach(dislikeButton => {
+      dislikeButton.addEventListener('click', function() {
+        const postID = this.dataset.postId;
+        const isLike = this.dataset.like === 'true';
+        const isDislike = this.dataset.dislike === 'true';
+        fetch(`/dislike/${postID}`, {
+          method: 'POST',
+          type: 'POST',
+          body: JSON.stringify({
+            is_like: isLike,
+            is_dislike: isDislike
+          }),
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+          }
+        }).then(response => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error('Failed to update dislike count');
+          }
+        }).then(data => {
+          const dislikeCountElement = this.querySelector('.dislike-count');
+          if (dislikeCountElement) {
+            dislikeCountElement.innerText = data.dislikeCount;
+          }
+          const likeIconElement = this.querySelector('.like-icon');
+          if (likeIconElement) {
+            if (data.isLiked) {
+              likeIconElement.classList.add('active');
+            } else {
+              likeIconElement.classList.remove('active');
+            }
+          }
+          const dislikeIconElement = this.querySelector('.dislike-icon');
+          if (dislikeIconElement) {
+            if (data.isDisliked) {
+              dislikeIconElement.classList.add('active');
+            } else {
+              dislikeIconElement.classList.remove('active');
+            }
+          }
+        }).catch(error => {
+          console.error(error);
         });
-  </script>
+      });
+    });
+  });
+</script>
+
   </section>
   @endforeach
         @else    

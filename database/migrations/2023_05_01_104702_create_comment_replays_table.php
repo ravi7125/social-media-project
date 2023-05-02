@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('postcommentlikes', function (Blueprint $table) {
+        Schema::create('comment_replays', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade')->default(null); 
             $table->foreignId('post_id')->constrained('posts')->onDelete('cascade')->onUpdate('cascade')->default(0);
-            $table->foreignId('postcomment_id')->nullable()->constrained('postcomments');
-            $table->boolean('comment_like')->default(0);
-            $table->boolean('comment_dislike')->default(0);
+            $table->foreignId('postcomment_id')->constrained('postcomments')->onDelete('cascade')->onUpdate('cascade')->nullable();
+            $table->text('comment_replay');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('postcommentlikes');
+        Schema::dropIfExists('comment_replays');
     }
 };

@@ -39,10 +39,13 @@ public function likes()
 
     public function dislikes()
     {
-        return $this->likes->where('is_dislike', true);
+        return $this->likes->where('comment_dislike', true);
     }
 
-
+    public function comment_replay()
+    {
+        return $this->hasMany(comment_replay::class);
+    }
 }
 
 

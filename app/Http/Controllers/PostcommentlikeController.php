@@ -27,26 +27,26 @@ class PostcommentlikeController extends Controller
             $like = postcommentlike::create([
                 'user_id' => Auth::id(),
                 'post_id' => $post_id,
-                'is_like' => 1,
-                'is_dislike' => 0,
+                'comment_like' => 1,
+                'comment_dislike' => 0,
                 'postcomment_id' => $comment_id,
             ]);
     
-        } elseif ($like->is_like) {
+        } elseif ($like->comment_like) {
             // This is the second click, update is_like to 0
-            $like->update(['is_like' => 0]);
+            $like->update(['comment_like' => 0]);
         } else {
             // This is a click, update is_like to 1
-            $like->update(['is_dislike' => 0, 'is_like' => 1]);
+            $like->update(['comment_like' => 1, 'comment_dislike' => 0]);
         }
     
         $likeCount = postcommentlike::where('post_id', $post_id)
             ->where('postcomment_id', $comment_id)
-            ->where('is_like', true)
+            ->where('comment_like', true)
             ->count();
-               // dd($like);
-               return redirect()->back()->with('success','Commentlike success');
-        // return redirect('/post/show')->with('success', 'Comment liked successfully!');
+            // dd($like);
+            
+            return redirect()->back()->with('success',' User Commentlike');
     }
     
 // This is a commentdislike logic.....
@@ -67,25 +67,26 @@ public function postcommentdislike($post_id, $comment_id)
         $dislike = postcommentlike::create([
             'user_id' => Auth::id(),
             'post_id' => $post_id,
-            'is_like' => 0,
-            'is_dislike' => 1,
+            'comment_like' => 0,
+            'comment_dislike' => 1,
             'postcomment_id' => $comment_id,
         ]);
 
-    } elseif ($dislike->is_dislike) {
+    } elseif ($dislike->comment_dislike) {
         // This is the second click, update is_dislike to 0
-        $dislike->update(['is_dislike' => 0]);
+        $dislike->update(['comment_dislike' => 0]);
     } else {
         // This is a click, update is_dislike to 1
-        $dislike->update(['is_like' => 0, 'is_dislike' => 1]);
+        $dislike->update(['comment_like' => 0, 'comment_dislike' => 1]);
     }
 
     $dislikeCount = postcommentlike::where('post_id', $post_id)
         ->where('postcomment_id', $comment_id)
-        ->where('is_dislike', true)
+        ->where('comment_dislike', true)
         ->count();
         // dd($dislike);
-        // return redirect('/post/show')->with('success', 'Post liked successfully!');
-        return redirect()->back()->with('success','Comment dislike success');
-}
+        
+        return redirect()->back()->with('success',' User Commentdislike');
+    }
+
 }

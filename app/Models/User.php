@@ -69,5 +69,11 @@ public function postcommentlike(){
     return $this->hasMany(postcommentlike::class);
 }    
 
+//this is comment replay relationship
+public function comment_replay()
+    {
+        return $this->hasMany(comment_replay::class);
+    }
+
     
 }

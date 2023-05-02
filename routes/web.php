@@ -6,6 +6,7 @@ use App\Http\Controllers\PostLikeController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\PostcommentController;
 use App\Http\Controllers\PostcommentlikeController;
+use App\Http\Controllers\CommentReplayController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -66,3 +67,10 @@ Route::group(['middleware' => 'auth'], function () {
 // coment like and dislike
 Route::get('/commentis-like/{post_id}/{comment_id?}', [PostcommentlikeController::class, 'postcommentlike'])->name('postlike.postcommentlike');
 Route::get('/commentdis-like/{post}/{postcomment?}', [PostcommentlikeController::class, 'postcommentdisLike'])->name('postlike.postcommentdisLike');
+
+// comment replay route
+Route::post ('/post/commentreplay/{post}/{comment_id?}',[CommentReplayController::class,'create'])->name('post.commentreplay');
+Route::get ('/post/commentview/{post}/{comment_id?}',[CommentReplayController::class,'show'])->name('post.commentviewreplay');
+
+// comment replay display blade
+Route::get ('/post/commentdisplay/{post}/{comment_id?}',[CommentReplayController::class,'commentreplayshow'])->name('post.commentdisplay');

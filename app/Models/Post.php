@@ -36,18 +36,17 @@ class Post extends Model
     {
         return $this->hasManyThrough(postcomment::class);
      }
-
-
-
-
-
 // this is postlikecomment relation.....
 
 public function commentlikes()
 {
   return $this->hasMany(postcommentlikes::class);
 }
-
+//this is recomment relationship
+public function comments_replay()
+{
+    return $this->hasMany(comments_replay::class);
+}
 
 }
 
